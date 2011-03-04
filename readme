@@ -1,4 +1,6 @@
 Header gives you the chance to put blocks on your head, like glass and cake, or if you'r a real hardhead, Bedrock!
 
+Examples
+-
 /head <id> [player] - Puts a block on your head
 ![An example of Header](http://i.imgur.com/qPCU2.png)
