@@ -1,0 +1,9 @@
+name: Header
+main: com.cheesier.Header.Header
+version: 1.0
+authors: 
+    - Cheesier
+commands:
+  head:
+    description: Put almost any block on your head!
+    usage: /<command> <block ID>
