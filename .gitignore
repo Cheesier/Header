@@ -1,2 +1,7 @@
 # Bin folder is nothing that is inportaint to the project
 /bin
+
+# Eclipse files are not necessary
+.project
+.classpath
+.settings/
