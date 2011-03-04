@@ -1,5 +1,6 @@
 package com.cheesier.Header;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -23,9 +24,11 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 public class Header extends JavaPlugin {
     private static Logger log = Logger.getLogger("Minecraft");
     private static PermissionHandler Permissions = null;
+    private static Plugin plugin = null;
     
 
-    public void onEnable() {       
+    public void onEnable() {
+    	plugin = this;
         
         // Say hello in a fancy way :P
         PluginDescriptionFile pdfFile = this.getDescription();
@@ -52,16 +55,36 @@ public class Header extends JavaPlugin {
     	
     	return false;
     }
+    
+    public static Player getPlayerFromName(String playerName) {
+		List<Player> players = plugin.getServer().matchPlayer(playerName);
+		// if not just one player popped up, say so :)
+		return (players.size() == 1 ? players.get(0) : null);
+	}
 
     private static boolean headCmd(CommandSender sender, String[] args) {  	
     	if ((sender instanceof Player)) {
     		Player player = (Player) sender;
-    		if (!Permissions.has(player, "Header.use")) {
+    		if (!player.isOp() && !Permissions.has(player, "Header.use")) {
 				player.sendMessage(ChatColor.RED + "You do not have permission to use that command.");
 				return true;
 			}
-    			
-    		if (args.length != 1) return false;
+    		
+    		Player target = null;
+    		if (args.length == 1) {
+    			target = player;
+    		}
+    		else if (args.length == 2) {
+    			if (!Permissions.has(player, "Header.others")) {
+    				player.sendMessage("You do not have permission to do this on someone else.");
+    			}
+    			target = getPlayerFromName(args[1]);
+    		}
+    		
+    		if (!(target instanceof Player)) {
+    			player.sendMessage("No player with that name.");
+    			return true;
+    		}
     		
     		int blockId;
     		try{
@@ -69,7 +92,7 @@ public class Header extends JavaPlugin {
     		} catch(Exception e) {
     			return false;
     		}
-    		player.getInventory().setHelmet(new ItemStack(blockId));
+    		target.getInventory().setHelmet(new ItemStack(blockId));
     		return true;
     	}
     	else {
