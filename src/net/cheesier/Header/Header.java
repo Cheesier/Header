@@ -1,4 +1,4 @@
-package com.cheesier.Header;
+package net.cheesier.Header;
 
 import java.util.logging.Logger;
 

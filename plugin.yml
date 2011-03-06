@@ -1,5 +1,5 @@
 name: Header
-main: com.cheesier.Header.Header
+main: net.cheesier.Header.Header
 version: 1.0
 authors: 
     - Cheesier
